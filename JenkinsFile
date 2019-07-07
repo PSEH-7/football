@@ -9,7 +9,7 @@ node('master') {
 	stage('run') {
 		sh 'docker ps -f name=football -q | xargs --no-run-if-empty docker container stop'
 		sh 'docker container ls -a -fname=football -q | xargs -r docker container rm'
-        sh "docker run -d  -m 2048M -e --name football -i -t football:latest"
+        sh "docker run -d  -m 2048M -p 8080:8080 --name football -i -t football:latest"
         echo "docker run successful"
     }
  }
