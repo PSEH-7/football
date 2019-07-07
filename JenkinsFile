@@ -13,19 +13,3 @@ node('master') {
         echo "docker run successful"
     }
  }
- 
- node('aws') {
-    checkout scm
-	stage('Compile stage') {
-         sh "mvn clean -U install" 
-    }   
-	stage('Build') {
-		sh "docker build -t football ."
-    }
-	stage('run') {
-		sh 'docker ps -f name=football -q | xargs --no-run-if-empty docker container stop'
-		sh 'docker container ls -a -fname=football -q | xargs -r docker container rm'
-        sh "docker run -d  -m 2048M -p 8080:8080 --name football -i -t football:latest"
-        echo "docker run successful"
-    }
- }
