@@ -1,7 +1,7 @@
 node('master') {
     checkout scm
 	stage('Compile stage') {
-         sh "mvn clean -U install -DskipTests=true" 
+         sh "mvn clean -U install" 
     }   
 	stage('Build') {
 		sh "docker build -t football ."
