@@ -91,7 +91,7 @@ public class FootballService {
 		return standings;
 	}
 
-	public List<Standing> getStandings(String countryname, String leaguename, String teamname) {
+	public Standing getStandings(String countryname, String leaguename, String teamname) {
 		// Country
 		List<Country> countries = getCountries();
 		List<Country> filteredCountryList = countries.stream().filter(e -> e.getCountry_name().equals(countryname))
@@ -128,6 +128,9 @@ public class FootballService {
 		if (filteredStandingsList.isEmpty()) {
 			return null;
 		}
-		return filteredStandingsList;
+		
+		Standing standing = filteredStandingsList.get(0);
+		standing.setCountry_id(country.getCountry_id());
+		return standing;
 	}
 }

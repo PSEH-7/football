@@ -25,7 +25,7 @@ public class FootballController {
 	
 	
 	@GetMapping("/standings/{countryname}/{leaguename}/{teamname}")
-	public List<Standing> getStandings(@PathVariable("countryname") String countryname,
+	public Standing getStandings(@PathVariable("countryname") String countryname,
 			@PathVariable("leaguename") String leaguename,
 			@PathVariable("teamname") String teamname) {
 		return service.getStandings(countryname, leaguename, teamname);

@@ -8,6 +8,7 @@ public class Standing implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private Integer country_id;
 	private String country_name;
 	private Integer league_id;
 	private String league_name;
@@ -17,6 +18,14 @@ public class Standing implements Serializable {
 
 	public Standing() {
 
+	}
+
+	public Integer getCountry_id() {
+		return country_id;
+	}
+
+	public void setCountry_id(Integer country_id) {
+		this.country_id = country_id;
 	}
 
 	public String getCountry_name() {
@@ -34,7 +43,7 @@ public class Standing implements Serializable {
 	public void setLeague_id(Integer league_id) {
 		this.league_id = league_id;
 	}
-	
+
 	public Integer getTeam_id() {
 		return team_id;
 	}
@@ -77,8 +86,5 @@ public class Standing implements Serializable {
 		this.team_name = team_name;
 		this.overall_league_position = overall_league_position;
 	}
-	
-	
-
 
 }
