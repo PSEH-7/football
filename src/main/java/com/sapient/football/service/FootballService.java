@@ -15,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 import com.sapient.football.model.Country;
 import com.sapient.football.model.League;
 import com.sapient.football.model.Standing;
-import com.sapient.football.model.Team;
 
 @Service
 public class FootballService {
@@ -25,7 +24,6 @@ public class FootballService {
 
 	public static final String APIKEY = "9bb66184e0c8145384fd2cc0f7b914ada57b4e8fd2e4d6d586adcc27c257a978";
 
-	@SuppressWarnings("unchecked")
 	public List<Country> getCountries() {
 		List<Country> countries = null;
 		try {
@@ -58,21 +56,21 @@ public class FootballService {
 		return leagues;
 	}
 
-	public List<Team> getTeams(Integer leagueId) {
-		List<Team> team = null;
-		try {
-			String url = "https://apiv2.apifootball.com/?action=get_teams&" + "league_id=" + leagueId + "&APIkey="
-					+ APIKEY;
-			URI uri = new URI(url);
-			ParameterizedTypeReference<List<Team>> typeRef = new ParameterizedTypeReference<List<Team>>() {
-			};
-			ResponseEntity<List<Team>> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, null, typeRef);
-			team = responseEntity.getBody();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		return team;
-	}
+//	public List<Team> getTeams(Integer leagueId) {
+//		List<Team> team = null;
+//		try {
+//			String url = "https://apiv2.apifootball.com/?action=get_teams&" + "league_id=" + leagueId + "&APIkey="
+//					+ APIKEY;
+//			URI uri = new URI(url);
+//			ParameterizedTypeReference<List<Team>> typeRef = new ParameterizedTypeReference<List<Team>>() {
+//			};
+//			ResponseEntity<List<Team>> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, null, typeRef);
+//			team = responseEntity.getBody();
+//		} catch (URISyntaxException e) {
+//			e.printStackTrace();
+//		}
+//		return team;
+//	}
 
 	public List<Standing> getStandings(Integer leagueId) {
 		List<Standing> standings = null;
@@ -111,24 +109,23 @@ public class FootballService {
 		League league = filteredLeagueList.get(0);
 
 		// team
-		List<Team> teams = getTeams(league.getLeague_id());
-		List<Team> filteredTeamList = teams.stream().filter(e -> e.getTeam_name().equals(teamname))
-				.collect(Collectors.toList());
-		if (filteredLeagueList.isEmpty()) {
-			return null;
-		}
+//		List<Team> teams = getTeams(league.getLeague_id());
+//		List<Team> filteredTeamList = teams.stream().filter(e -> e.getTeam_name().equals(teamname))
+//				.collect(Collectors.toList());
+//		if (filteredLeagueList.isEmpty()) {
+//			return null;
+//		}
 //		Team team = filteredTeamList.get(0);
-		//standing
+		
+		// standing
 		List<Standing> standings = getStandings(league.getLeague_id());
-		List<Standing> filteredStandingsList = standings.stream()
-				.filter(e -> e.getTeam_name().equals(teamname))
-				.filter(e -> e.getCountry_name().equals(countryname))
-				.filter(e -> e.getLeague_name().equals(leaguename))
+		List<Standing> filteredStandingsList = standings.stream().filter(e -> e.getTeam_name().equals(teamname))
+				.filter(e -> e.getCountry_name().equals(countryname)).filter(e -> e.getLeague_name().equals(leaguename))
 				.collect(Collectors.toList());
 		if (filteredStandingsList.isEmpty()) {
 			return null;
 		}
-		
+
 		Standing standing = filteredStandingsList.get(0);
 		standing.setCountry_id(country.getCountry_id());
 		return standing;
