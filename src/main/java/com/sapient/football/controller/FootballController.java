@@ -3,6 +3,8 @@ package com.sapient.football.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +27,15 @@ public class FootballController {
 	
 	
 	@GetMapping("/standings/{countryname}/{leaguename}/{teamname}")
-	public Standing getStandings(@PathVariable("countryname") String countryname,
+	public ResponseEntity<Object> getStandings(@PathVariable("countryname") String countryname,
 			@PathVariable("leaguename") String leaguename,
 			@PathVariable("teamname") String teamname) {
-		return service.getStandings(countryname, leaguename, teamname);
+		
+		Standing standing = service.getStandings(countryname, leaguename, teamname);
+		if(standing == null) {
+			return new ResponseEntity<Object>("No Data Exists", HttpStatus.OK);
+		}
+		return new ResponseEntity<Object>(standing, HttpStatus.OK);
 	}
 	
 
